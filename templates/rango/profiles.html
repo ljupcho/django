@@ -1,0 +1,15 @@
+{% extends 'rango/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body_block %}
+    {% if user_profiles_list %}
+        <ul>
+        {% for user_profile in user_profiles_list %}
+            <li>{{ user_profile.user.username }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <br/>
+    Go back to rango homepage <a href="/rango/">Homepage</a><br />
+{% endblock %}

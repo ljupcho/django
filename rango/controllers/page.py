@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from rango.forms import PageForm
-from rango.models import Category
+from rango.models import Category, Page
 
 
 @login_required
@@ -36,6 +36,26 @@ def add(request, category_name_url):
 							  {'form': form, 'category_name': category_name, 'category_name_url': category_name_url},
 							  context)
 
+
+@login_required
+def track_url(request):
+	"""
+	Increase the number of views for page
+	:param request:
+	:return:
+	"""
+	if request.method == 'GET':
+		page_id = request.GET['page_id']
+
+		try:
+			page = Page.objects.get(id=int(page_id))
+			if page is not None:
+				page.views = page.views + 1
+				page.save()
+		except:
+			pass
+
+	return HttpResponseRedirect('/rango/')
 
 def encode_url(str):
 	return str.replace(' ', '_')

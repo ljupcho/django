@@ -1,0 +1,9 @@
+{% extends 'rango/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body_block %}
+    this profile username is: {{ user_profile.user.username }}
+    <br/>
+    Go back to rango homepage <a href="/rango/">Homepage</a><br />
+{% endblock %}

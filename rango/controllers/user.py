@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 
 from rango.forms import UserForm, UserProfileForm
+from rango.models import UserProfile
 
 
 def register(request):
@@ -79,3 +81,29 @@ def attempt_logout(request):
 	logout(request)
 
 	return HttpResponseRedirect('/rango/')
+
+
+@login_required
+def profile(request):
+	context = RequestContext(request)
+
+	user_profile = None
+	if request.method == 'GET':
+		# user = User.objects.get(id=request.user.id)
+		try:
+			user_profile = UserProfile.objects.get(user=request.user)
+		except:
+			pass
+
+	return render_to_response('rango/profile.html', {'user_profile': user_profile}, context)
+
+
+@login_required
+def other_profiles(request):
+	context = RequestContext(request)
+	user_profiles_list = []
+
+	if request.method == 'GET':
+		user_profiles_list = UserProfile.objects.all()
+
+	return render_to_response('rango/profiles.html', {'user_profiles_list': user_profiles_list}, context)
