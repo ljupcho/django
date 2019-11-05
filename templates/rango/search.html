@@ -1,0 +1,14 @@
+{% extends 'rango/base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block body_block %}
+    {% if result_list %}
+        <ul>
+        {% for result in result_list %}
+            <li><a href="{{ result.link }}">{{ result.title }}</a><em>{{ result.summary }}</em></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    Go back to rango homepage <a href="/rango/">Homepage</a><br />
+{% endblock %}

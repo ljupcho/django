@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from rango.controllers import user, about, category, page
+from rango.controllers import user, about, category, page, search
 
 urlpatterns = patterns('',
 						url(r'^$', category.index, name='index'),
@@ -11,4 +11,5 @@ urlpatterns = patterns('',
 						url(r'^login/', user.attempt_login, name='login'),
 						url(r'^logout/', user.attempt_logout, name='logout'),
 						url(r'^about/', about.show, name='about'),
+						url(r'^search/', search.find, name='search'),
 					   )
