@@ -16,4 +16,5 @@ urlpatterns = patterns('',
 						url(r'^about/', about.show, name='about'),
 						url(r'^search/', search.find, name='search'),
 						url(r'^like_category/', category.increase_like, name='increase_like'),
+						url(r'^suggest_category/$', category.suggest_category, name='suggest_category'),
 					   )

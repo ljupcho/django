@@ -5,6 +5,7 @@
     {
         this.init();
         this.addLikeListener();
+        this.addSuggestionListener();
     }
 
     Category.prototype =
@@ -13,20 +14,37 @@
         {
             this.likeEl = $('#likes');
             this.id = this.likeEl.attr('data-catid');
-            this.endpoint = '/rango/like_category';
+            this.likeEndpoint = '/rango/like_category';
+            this.suggestionEl = $('#suggestion');
+            this.suggectionEndpoint = '/rango/suggest_category';
         },
+
         addLikeListener: function()
         {
-            var self = this;
-            this.likeEl.click(function(){
-                self.runAjaxLike();
-            });
+            if (this.likeEl) {
+                var self = this;
+                this.likeEl.click(function(){
+                    $.get(self.likeEndpoint, {category_id: self.id}, function(data){
+                        $('#like_count').html(data);
+                    });
+                });
+            }
         },
-        runAjaxLike: function()
+
+        addSuggestionListener: function()
         {
-            $.get(this.endpoint, {category_id: this.id}, function(data){
-	            $('#like_count').html(data);
-	        });
+            if (this.suggestionEl) {
+                var self = this;
+                this.suggestionEl.keyup(function(){
+                    if (self.suggestionEl.val() == '') {
+                        $('#suggested_categories').html('');
+                    } else {
+                        $.get(self.suggectionEndpoint, {suggestion: self.suggestionEl.val()}, function(data){
+                            $('#suggested_categories').html(data);
+                        });
+                    }
+                });
+            }
         }
     }
 

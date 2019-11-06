@@ -83,3 +83,19 @@ def increase_like(request):
 			likes = category.likes
 
 	return HttpResponse(likes)
+
+
+@login_required
+def suggest_category(request):
+	""""
+	Get categories list based on keyword
+	"""
+	context = RequestContext(request)
+	max_results = 5
+	categories = []
+	if request.method == 'GET':
+		suggestion = request.GET['suggestion']
+		categories = Category.objects.filter(name__startswith=suggestion)[:max_results]
+
+	print(categories)
+	return render_to_response('rango/category_list.html', {'cat_list': categories}, context)

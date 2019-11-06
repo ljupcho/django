@@ -3,7 +3,11 @@
 {% block title %}List all {% endblock %}
 
 {% block body_block %}
+        <h1>Search Categories</h1>
+        <input class="input-medium search-query" type="text" name="suggestion" value="" id="suggestion" />
+        <div id="suggested_categories"></div>
 
+        <h1>All Categories</h1>
         {% if categories %}
             <ul>
                 {% for category in categories %}
