@@ -5,6 +5,10 @@
 {% block body_block %}
      <h1>{{ category_name }}</h1>
     {% if category %}
+        <div>Like count: <span id="like_count">{{ category.likes }} </span></div>
+        {% if user.is_authenticated %}
+            <button id ="likes" data-catid="{{category.id}}" class="btn btn-mini btn-primary likes" type="button">Like</button>
+        {% endif %}
         {% if pages %}
             <ul>
                 {% for page in pages %}

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,5 +7,8 @@
 </head>
 <body>
         {% block body_block %}{% endblock %}
+
+<script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
+<script src="{% static 'js/rango-ajax.js' %}"></script>
 </body>
 </html>

@@ -15,4 +15,5 @@ urlpatterns = patterns('',
 						url(r'^other_profiles/', user.other_profiles, name='other_profiles'),
 						url(r'^about/', about.show, name='about'),
 						url(r'^search/', search.find, name='search'),
+						url(r'^like_category/', category.increase_like, name='increase_like'),
 					   )

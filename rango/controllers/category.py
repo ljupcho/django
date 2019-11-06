@@ -68,15 +68,18 @@ def add(request):
 	return render_to_response('rango/add_category.html', {'form': form}, context)
 
 
+@login_required
 def increase_like(request):
 	""""
 	Increase the number of likes of a category
 	"""
+	likes = 0
 	if request.method == 'GET':
 		cat_id = request.GET['category_id']
 		category = Category.objects.get(id=int(cat_id))
 		if category is not None:
-			category.likes = category.likes + 1;
+			category.likes = category.likes + 1
 			category.save()
+			likes = category.likes
 
-	return HttpResponse('OK')
+	return HttpResponse(likes)
