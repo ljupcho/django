@@ -97,5 +97,23 @@ def suggest_category(request):
 		suggestion = request.GET['suggestion']
 		categories = Category.objects.filter(name__startswith=suggestion)[:max_results]
 
-	print(categories)
 	return render_to_response('rango/category_list.html', {'cat_list': categories}, context)
+
+
+@login_required
+def add_auto_page(request):
+	""""
+	From a api search results add the page to the category
+	"""
+	context = RequestContext(request)
+	page = None
+	pages = []
+	if request.method == 'POST':
+		category_id = request.POST['category_id']
+		title = request.POST['title']
+		url = request.POST['url']
+		category = Category.objects.get(id=int(category_id))
+		page = Page.objects.get_or_create(category=category, title=title, url=url)
+		pages = Page.objects.filter(category=category).order_by('-views')
+
+	return render_to_response('rango/category_list.html', {'pages': pages, 'new_page': page}, context)

@@ -13,10 +13,11 @@
         init: function()
         {
             this.likeEl = $('#likes');
-            this.id = this.likeEl.attr('data-catid');
             this.likeEndpoint = '/rango/like_category';
             this.suggestionEl = $('#suggestion');
             this.suggectionEndpoint = '/rango/suggest_category';
+            this.addPageEl = $('#add_page');
+            this.addPageEndpoint = '/rango/add_auto_page';
         },
 
         addLikeListener: function()
@@ -24,7 +25,10 @@
             if (this.likeEl) {
                 var self = this;
                 this.likeEl.click(function(){
-                    $.get(self.likeEndpoint, {category_id: self.id}, function(data){
+                    let input = {
+                        category_id: self.likeEl.attr('data-catid')
+                    };
+                    $.get(self.likeEndpoint, input, function(data){
                         $('#like_count').html(data);
                     });
                 });
@@ -39,10 +43,30 @@
                     if (self.suggestionEl.val() == '') {
                         $('#suggested_categories').html('');
                     } else {
-                        $.get(self.suggectionEndpoint, {suggestion: self.suggestionEl.val()}, function(data){
+                        let input = {
+                            suggestion: self.suggestionEl.val()
+                        };
+                        $.get(self.suggectionEndpoint, input, function(data){
                             $('#suggested_categories').html(data);
                         });
                     }
+                });
+            }
+        },
+
+        addNewPage: function()
+        {
+            if (this.addPageEl) {
+                var self = this;
+                this.addPageEl.click(function(){
+                    let input = {
+                        category_id: self.addPageEl.attr('data-catid'),
+                        title: self.addPageEl.attr('data-title'),
+                        url: self.addPageEl.attr('data-url')
+                    };
+                    $.post(self.addPageEndpoint, input, function(data){
+                        $('#pages').html(data);
+                    });
                 });
             }
         }
